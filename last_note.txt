@@ -1,0 +1,109 @@
+1- login using phone and otp , sign in gmail , another social check using email if not email exists create new email
+
+2- if no user with this data in login create new user with phone
+
+3- create new flag in users ( user create from where )
+
+4- show products that near from user location
+
+5- country , area , city at dashboard 
+
+6- when request order send location from map and get from it country , area , city polegon and check 
+if delivery for this seller support or not
+
+7- الادمن بيضيف نظام الرعايه عباره عن اسئله ويقول هل هي اجباريه اني اجاوب عليها ولا لا بالنسبه للبائع 
+البائع بيجاوب ع الاجباري و مممكن الاختياري بيحدد الوقت بتاعها 
+بالاضافه ان العميل ممكن يختار اي نبات للرعايه و يحط عليها اسئله الرعايه الي مجاوبش عليها البائع و كل عميل منفصل عن الاخر ف عمليه اضافه التنبيهات الي هي الاجابات الخاصه بيه
+و دي للاكونت البرو نظام الرعايه بالنسبه للعميل 
+
+8 - بوابه الدفع هتكون نون بايمنت
+
+9 - بعد اكتمال الاوردر ارسل اشعار انه يقيم كل منتج 
+
+10- كل منتج ليه تقييم خدمات المنتج و تقييم حاله المنتج عند الوصول و تقييم المنتج كما هو في الوصف 
+و خدمات المنتج و حاله المنتج عند الوصول دي خاصه بتقييم التاجر 
+انما المنتج كما هو في الوصف دي خاصه بالمنتج تقييم كتاجر و اجيب متوسط كل تقيمات التاجر بحيث ده تقييمه 
+و ممكن اروح للطلبيه بالكامل ادي تقييم للمنتج و حاله المنتج و المنتج كما ف الوصف ف يروح لكل المنتجات الي تحت الاوردر و ادي القيمه و التقييم لكل واحد فيهم 
+
+11- الرعايه البائع بيضيف عدد المرات و المده يومي ولا شهري ولا سنوي
+اما العميل بيضيف معاد بدء التنبيه عند اضافه منتج الي الرعايه 
+
+
+12 - تاريخ التنبيه بيتحسب ان فرضا منتج ليه مرتين رعايه كل 12 ساعه ف بعد لما 
+لما يرن التنبيه بعد 12 ساعه اقول التنبيه الجاي 
+الوقت دلوقتي + 
+12 ساعه الجايه 
+و هكذا
+
+
+
+_____________________________________________________
+ملاحظات
+1- ف صفحه تفاصيل المنج عند عرض النباتات التي تم اختيارها اشيل عمليه التحكم اضافه او نقصان لان منعرفش يزود ف انهي منتج فيهم 
+
+
+ وعمليه احببت هذا المنتج تكون ف تفاصيل المنتج 
+
+
+_______________________________________________________--
+
+api notes
+1- /auth/register-check need to send flag attribute boolean if user if exists or registered && falg for check username , email are not empty 
+
+2- feature image icon of product info (( svg ))
+
+3- product has discount true or false in product info 
+
+
+___________________________________________--
+
+1- rate at product details will not send order_id it will send product_id 
+and at profile page when rate send in this case order_id
+
+2- when login return image of this user
+
+3- product by id return is following this seller or not
+
+4-return number of rate number of people rate 1 star , 2 star , 3 star ===> this rate star per product info
+
+5-product deliveries when there is no address for client return message that user must create address to calculate days of delivery
+
+6- favourite and like and follow action response from api boolean is_like or is_favourite with true or false
+
+7- likes of product return image and usernmae of user that make like for this product
+
+8-create or update visa bank return orders is empty array and all visa banks delete updated_at
+
+_______________________________________________________________________________
+1- save care products-care/add-to-care return product object 
+
+2- return from products-care next_alert time and current time now
+
+3- next_alert input when add cutom care 
+
+4- add new custom care return object of care 
+
+5 -  product by id cares custom by user check to be returned
+
+
+
+____________________________________________________________________________
+1- api to get sellers at custom order ai
+
+2- list of accepted , list of rejected from sellers to custom order
+
+3- api to get all replies of sellers with filter
+
+4 - prdocut details in_care mean user addded this product to his care list or not and its boolean
+
+
+______________________________-
+1- all replies seller add fiter name 
+
+2- status of seller reply send field the same value of database
+
+3- product details if i request this product in order return status of order
+
+4 - remaing time of product care at care product page
+
+5- api for tax 
