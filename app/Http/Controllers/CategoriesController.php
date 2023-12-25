@@ -17,7 +17,7 @@ class CategoriesController extends Controller
     use upload_image;
     //
     public function index(){
-        $data = categories::query()->with('image')->orderBy('id','DESC');
+        $data = categories::query()->with('image');
         $output = app(Pipeline::class)
             ->send($data)
             ->through([
@@ -27,6 +27,11 @@ class CategoriesController extends Controller
             ->get();
 
         return CategoryResource::collection($output);
+    }
+
+    public function show($id){
+        $data = categories::query()->with('image')->findOrFail($id);
+        return CategoryResource::make($data);
     }
 
     public function save(categoriesFormRequest $request){

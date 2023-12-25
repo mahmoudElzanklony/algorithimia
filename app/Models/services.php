@@ -10,7 +10,11 @@ class services extends Model
     use HasFactory;
     protected $fillable = ['category_id','name','info'];
 
-    public function image(){
-        return $this->morphOne(images::class,'imageable');
+    public function images(){
+        return $this->morphMany(images::class,'imageable');
+    }
+
+    public function category(){
+        return $this->belongsTo(categories::class,'category_id');
     }
 }

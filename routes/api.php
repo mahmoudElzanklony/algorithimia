@@ -31,6 +31,7 @@ Route::group(['middleware'=>'changeLang'],function (){
 
     Route::group(['prefix'=>'/categories'],function(){
         Route::get('/',[CategoriesController::class,'index']);
+        Route::get('/{id}',[CategoriesController::class,'show']);
     });
     Route::group(['prefix'=>'/services'],function(){
         Route::get('/',[ServicesController::class,'index']);

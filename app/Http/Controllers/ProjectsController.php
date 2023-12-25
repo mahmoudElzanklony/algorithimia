@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ImageModalSave;
+use App\Filters\LimitFilter;
+use App\Filters\projects\CategoryProjectFilter;
+use App\Filters\ServiceIdFilter;
 use App\Http\Controllers\Filters\NameFilter;
 use App\Http\Requests\categoriesFormRequest;
 use App\Http\Requests\projectsFormRequest;
@@ -23,11 +26,16 @@ class ProjectsController extends Controller
     use upload_image;
     //
     public function index(){
-        $data = projects::query()->with('images')->orderBy('id','DESC');
+        $data = projects::query()->with(['images','service.category'])
+
+            ->orderBy('id','DESC');
         $output = app(Pipeline::class)
             ->send($data)
             ->through([
-                NameFilter::class
+                NameFilter::class,
+                CategoryProjectFilter::class,
+                LimitFilter::class,
+                ServiceIdFilter::class
             ])
             ->thenReturn()
             ->get();

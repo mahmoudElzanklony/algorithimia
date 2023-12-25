@@ -14,4 +14,8 @@ class projects extends Model
     public function images(){
         return $this->morphMany(images::class,'imageable');
     }
+
+    public function service(){
+        return $this->belongsTo(services::class,'service_id');
+    }
 }

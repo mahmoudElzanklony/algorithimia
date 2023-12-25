@@ -19,7 +19,8 @@ class ServiceResource extends JsonResource
             'id'=>$this->id,
             'name'=>FormRequestHandleInputs::handle_output_column($this->name),
             'info'=>FormRequestHandleInputs::handle_output_column($this->info),
-            'image'=>ImagesResource::make($this->whenLoaded('image')),
+            'category'=>CategoryResource::make($this->whenLoaded('category')),
+            'images'=>ImagesResource::collection($this->whenLoaded('images')),
             'created_at'=>$this->created_at->format('Y h d,h:i A'),
         ];
     }

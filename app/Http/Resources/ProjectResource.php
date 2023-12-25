@@ -21,6 +21,7 @@ class ProjectResource extends JsonResource
           'info'=>FormRequestHandleInputs::handle_output_column($this->info),
           'skills'=>$this->skills,
           'link'=>$this->link,
+          'service'=>ServiceResource::make($this->whenLoaded('service')),
           'images'=>ImagesResource::collection($this->whenLoaded('images')),
           'created_at'=>$this->created_at->format('Y m d, h:i A'),
 
