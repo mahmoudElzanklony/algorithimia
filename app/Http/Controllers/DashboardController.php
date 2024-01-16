@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Filters\EndDateFilter;
+use App\Filters\LimitFilter;
+use App\Filters\ServiceIdFilter;
 use App\Filters\StartDateFilter;
 use App\Filters\UsernameFilter;
 use App\Filters\users\RoleIdFilter;
 use App\Filters\users\RoleNameFilter;
+use App\Http\Controllers\Filters\NameFilter;
+use App\Http\Resources\AdResource;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\QuestionsResource;
+use App\Http\Resources\ServiceResource;
 use App\Http\Resources\UserResource;
 use App\Http\traits\messages;
+use App\Models\ads;
+use App\Models\categories;
+use App\Models\projects;
+use App\Models\questions;
+use App\Models\services;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\traits\helpers_requests_api\TicketsHelperApi;
@@ -47,6 +60,59 @@ class DashboardController extends Controller
 
     }
 
+    public function categories()
+    {
+        $data = categories::query()->with('image')->withCount(['services','projects'])->get();
+        return CategoryResource::collection($data);
+    }
 
+    public function services()
+    {
+        $data = services::query()->with(['images','category'])->withCount(['projects'])->get();
+        return ServiceResource::collection($data);
+    }
+
+    public function projects()
+    {
+        $data = projects::query()->with(['images','service'])->orderBy('id','DESC');
+        $output = app(Pipeline::class)
+            ->send($data)
+            ->through([
+                NameFilter::class,
+                ServiceIdFilter::class,
+                LimitFilter::class
+            ])
+            ->thenReturn()
+            ->get();
+        return ProjectResource::collection($output);
+    }
+
+    public function posts()
+    {
+        $data = ads::query()->with(['image','requirements'])->orderBy('id','DESC');
+        $output = app(Pipeline::class)
+            ->send($data)
+            ->through([
+                NameFilter::class,
+                LimitFilter::class
+            ])
+            ->thenReturn()
+            ->get();
+        return AdResource::collection($output);
+    }
+
+    public function faqs()
+    {
+        $data = questions::query()->orderBy('id','DESC');
+        $output = app(Pipeline::class)
+            ->send($data)
+            ->through([
+                NameFilter::class,
+                LimitFilter::class
+            ])
+            ->thenReturn()
+            ->get();
+        return QuestionsResource::collection($output);
+    }
 
 }

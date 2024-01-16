@@ -16,7 +16,8 @@ class AdRequirmentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'=>FormRequestHandleInputs::handle_output_column($this->name),
+            'id'=>$this->id,
+            'name'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->name):$this->name,
             'created_at'=>$this->created_at->format('Y m d, h:i A'),
         ];
     }

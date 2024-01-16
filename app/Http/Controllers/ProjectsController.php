@@ -58,7 +58,8 @@ class ProjectsController extends Controller
             }
         }
         DB::commit();
-        return messages::success_output(trans('messages.saved_successfully'),ProjectResource::make($output));
+        $result  = projects::query()->with(['images','service'])->find($output->id);
+        return messages::success_output(trans('messages.saved_successfully'),ProjectResource::make($result));
 
     }
 }

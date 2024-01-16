@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Services\FormRequestHandleInputs;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class QuestionsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,10 +18,8 @@ class CategoryResource extends JsonResource
         return [
           'id'=>$this->id,
           'name'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->name):$this->name,
-          'image'=>ImagesResource::make($this->whenLoaded('image')),
-          'services_count'=>$this->services_count,
-          'projects_count'=>$this->projects_count,
-          'created_at'=>$this->created_at->format('Y h d,h:i A'),
+          'answer'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->answer):$this->answer,
+          'created_at'=>$this->created_at->format('Y m d, h:i A'),
         ];
     }
 }

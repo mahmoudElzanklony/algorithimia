@@ -12,6 +12,7 @@ use App\Http\traits\messages;
 use App\Http\traits\upload_image;
 use App\Models\ads;
 use App\Models\ads_requirments;
+use App\Models\images;
 use App\Models\languages;
 use App\Models\projects;
 use App\Services\FormRequestHandleInputs;
@@ -25,7 +26,7 @@ class AdsController extends Controller
     use upload_image;
     //
     public function index(){
-        $data = ads::query()->with('requirements')->orderBy('id','DESC');
+        $data = ads::query()->with(['requirements','image'])->orderBy('id','DESC');
         $output = app(Pipeline::class)
             ->send($data)
             ->through([
@@ -45,8 +46,18 @@ class AdsController extends Controller
         $output = ads::query()->updateOrCreate([
             'id'=>$data['id'] ?? null
         ],$data);
-
+        if(request()->hasFile('image')){
+            if(request()->has('id')){
+                images::query()
+                    ->where('imageable_type','=','App\Models\ads')
+                    ->where('imageable_id','=',request('id'))->delete();
+                ads_requirments::query()->where('ad_id','=',request('id'))->delete();
+            }
+            $image = $this->upload(request()->file('image'),'ads');
+            ImageModalSave::make($output->id,'ads','ads/'.$image);
+        }
         if(request()->has(app()->getLocale().'_requirements')){
+
             $langs = languages::query()->select('prefix')->get();
             $inputs = request(app()->getLocale().'_requirements');
 
@@ -69,7 +80,7 @@ class AdsController extends Controller
             }
         }
         DB::commit();
-        $final = ads::query()->with('requirements')->find($output->id);
+        $final = ads::query()->with(['requirements','image'])->find($output->id);
         return messages::success_output(trans('messages.saved_successfully'),AdResource::make($final));
 
     }

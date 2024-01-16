@@ -8,6 +8,7 @@ use App\Http\Requests\categoriesFormRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\traits\messages;
 use App\Models\categories;
+use App\Models\images;
 use App\Services\FormRequestHandleInputs;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
@@ -42,9 +43,13 @@ class CategoriesController extends Controller
         ],$data);
         if(request()->hasFile('image')){
             $image = $this->upload(request()->file('image'),'categories');
+            images::query()
+                ->where('imageable_type','=','App\Models\categories')
+                ->where('imageable_id','=',$output->id)->delete();
             ImageModalSave::make($output->id,'categories','categories/'.$image);
         }
-        return messages::success_output(trans('messages.saved_successfully'),CategoryResource::make($output));
+        $data = categories::query()->with('image')->withCount(['services','projects'])->find($output->id);
+        return messages::success_output(trans('messages.saved_successfully'),CategoryResource::make($data));
 
     }
 }

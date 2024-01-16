@@ -17,4 +17,9 @@ class services extends Model
     public function category(){
         return $this->belongsTo(categories::class,'category_id');
     }
+
+    public function projects()
+    {
+        return $this->hasMany(projects::class,'service_id');
+    }
 }

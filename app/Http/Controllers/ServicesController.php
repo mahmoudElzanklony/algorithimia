@@ -54,7 +54,8 @@ class ServicesController extends Controller
             }
         }
         DB::commit();
-        return messages::success_output(trans('messages.saved_successfully'),ServiceResource::make($output));
+        $data = services::query()->with(['images','category'])->orderBy('id','DESC')->find($output->id);
+        return messages::success_output(trans('messages.saved_successfully'),ServiceResource::make($data));
 
     }
 }

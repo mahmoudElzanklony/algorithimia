@@ -17,9 +17,10 @@ class AdResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'name'=>FormRequestHandleInputs::handle_output_column($this->name),
-            'info'=>FormRequestHandleInputs::handle_output_column($this->info),
+            'name'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->name):$this->name,
+            'info'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->info):$this->info,
             'requirements'=>AdRequirmentResource::collection($this->whenLoaded('requirements')),
+            'image'=>ImagesResource::make($this->whenLoaded('image')),
             'created_at'=>$this->created_at->format('Y m d, h:i A'),
         ];
     }

@@ -17,11 +17,12 @@ class ProjectResource extends JsonResource
     {
         return [
           'id'=>$this->id,
-          'name'=>FormRequestHandleInputs::handle_output_column($this->name),
-          'info'=>FormRequestHandleInputs::handle_output_column($this->info),
+          'name'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->name):$this->name,
+          'info'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->info):$this->info,
           'skills'=>$this->skills,
           'link'=>$this->link,
           'service'=>ServiceResource::make($this->whenLoaded('service')),
+          'service_id'=>$this->service_id,
           'images'=>ImagesResource::collection($this->whenLoaded('images')),
           'created_at'=>$this->created_at->format('Y m d, h:i A'),
 

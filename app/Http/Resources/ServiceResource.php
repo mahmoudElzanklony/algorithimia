@@ -17,10 +17,12 @@ class ServiceResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'name'=>FormRequestHandleInputs::handle_output_column($this->name),
-            'info'=>FormRequestHandleInputs::handle_output_column($this->info),
+            'name'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->name):$this->name,
+            'info'=>str_contains(request()->fullUrl(), 'dashboard') == false ? FormRequestHandleInputs::handle_output_column($this->info):$this->info,
             'category'=>CategoryResource::make($this->whenLoaded('category')),
+            'category_id'=>$this->category_id,
             'images'=>ImagesResource::collection($this->whenLoaded('images')),
+            'projects_count'=>$this->projects_count,
             'created_at'=>$this->created_at->format('Y h d,h:i A'),
         ];
     }

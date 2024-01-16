@@ -15,4 +15,14 @@ class categories extends Model
     public function image(){
         return $this->morphOne(images::class,'imageable');
     }
+
+    public function services()
+    {
+        return $this->hasMany(services::class,'category_id');
+    }
+
+    public function projects()
+    {
+        return $this->hasManyThrough(projects::class,services::class,'category_id','service_id');
+    }
 }

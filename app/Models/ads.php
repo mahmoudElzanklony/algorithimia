@@ -14,4 +14,9 @@ class ads extends Model
     public function requirements(){
         return $this->hasMany(ads_requirments::class,'ad_id');
     }
+
+    public function image()
+    {
+        return $this->morphOne(images::class,'imageable');
+    }
 }
