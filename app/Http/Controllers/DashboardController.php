@@ -60,6 +60,17 @@ class DashboardController extends Controller
 
     }
 
+    public function statistics()
+    {
+        return messages::success_output('',[
+            'categories'=>categories::query()->count(),
+            'services'=>services::query()->count(),
+            'projects'=>services::query()->count(),
+            'posts'=>ads::query()->count(),
+            'FAQs'=>questions::query()->count(),
+        ]);
+    }
+
     public function categories()
     {
         $data = categories::query()->with('image')->withCount(['services','projects'])->get();

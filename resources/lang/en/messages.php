@@ -23,6 +23,7 @@ return [
     'activation_done'=>'Activation account has been done successfully',
     'order_done_successfully'=>'Order done successfully',
     'rated_successfully'=>'Rate operation done successfully',
+    'send_successfully'=>'Your message sent successfully',
 
     // ----------------------start of dashboard - ---------------------
     'seller_has_permission_to_add_articles'=>'add permission to write articles from this seller',

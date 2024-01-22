@@ -16,6 +16,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\ContactUsController;
 
 
 
@@ -55,6 +56,7 @@ Route::group(['middleware'=>'changeLang'],function (){
 
     //----------------------- start of dashboard------------------
     Route::group(['prefix'=>'/dashboard','middleware'=>'CheckApiAuth'],function(){
+        Route::post('/statistics',[DashboardController::class,'statistics']);
         Route::post('/users',[DashboardController::class,'users']);
         Route::post('/categories',[DashboardController::class,'categories']);
         Route::post('/services',[DashboardController::class,'services']);
@@ -87,6 +89,7 @@ Route::group(['middleware'=>'changeLang'],function (){
 
     // delete item
     Route::post('/delete-item',[GeneralServiceController::class,'delete_item']);
+    Route::post('/contact_us',[ContactUsController::class,'index']);
 
 
 
