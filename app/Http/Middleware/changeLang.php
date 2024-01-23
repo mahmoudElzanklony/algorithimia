@@ -27,7 +27,7 @@ class changeLang
             }
 
         }else{
-            app()->setLocale('ar');
+            app()->setLocale('en');
         }
         if(!(request()->hasHeader('apikey') && request()->header('apikey') == env('apikey','algorithimia2023'))){
             return messages::error_output('api key is missing !!');
